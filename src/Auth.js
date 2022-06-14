@@ -9,8 +9,14 @@ class Auth {
         if (this.token) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.token;
         }
+        
+        console.log('this.user');
+
+        console.log(this.user);
+
     }
     login (token, user) {
+
         window.localStorage.setItem('token', token);
         window.localStorage.setItem('user', JSON.stringify(user));
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
