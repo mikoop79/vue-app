@@ -22,6 +22,10 @@
 </template>
 
 <script>
+
+import axios from "axios";
+
+
 export default {
   data() {
     return {
@@ -37,7 +41,7 @@ export default {
   methods: {
     register() {
       console.log(this.user);
-      this.axios.post('http://127.0.0.1:8000/api/register', this.user)
+      axios.post('/api/auth/register', this.user)
           .then(() => {
             this.$router.push('/login');
           })

@@ -1,55 +1,49 @@
 import { createApp } from 'vue'
+import './assets/main.css'
 import App from './App.vue'
+import { routes } from './routes.js'
+import { createRouter, createWebHistory } from 'vue-router'
+import Auth from './Auth'
 
-// import axios from 'axios';
-// import VueAxios from 'vue-axios';
-// import Auth from './Auth.js';
-
-import VueRouter from 'vue-router';
-import LoginPage from './components/LoginPage.vue';
-import RegisterPage from './components/RegisterPage.vue';
-import DashboardPage from './components/DashboardPage.vue';
-
-
-
-const routes = [
-    {
-        path: '/login',
-        component: LoginPage,
-        name: "Login"
-    },
-    {
-        path: '/register',
-        component: RegisterPage,
-        name: "Register"
-    },
-    {
-        path: '/dashboard',
-        component: DashboardPage,
-        name: "Dashboard",
-        meta: {
-            requiresAuth: true
+let app = createApp(App)
+let router = createRouter({
+    history: createWebHistory(),
+    routes: import.meta.hot ? [] : routes,
+})
+// redirect to login for pages that require Authorisation
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth) ) {
+        if (Auth.check()) {
+            console.log('check');
+            next();
+            return;
+        } else {
+            router.push('/login');
         }
+    } else {
+        next();
     }
-];
-
-const router = new VueRouter({
-    mode: 'history',
-    routes: routes,
-    linkActiveClass: 'nav__link--active',
-    linkExactActiveClass: 'nav__link--exact',
 });
 
-// const router = VueRouter.createRouter({
-//     // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
-//     history: VueRouter.createWebHashHistory(),
-//     routes, // short for `routes: routes`
-// })
+if (import.meta.hot) {
+    let removeRoutes = []
 
-const app = createApp(App);
+    for (let route of routes) {
+        removeRoutes.push(router.addRoute(route))
+    }
 
+    import.meta.hot.accept('./routes.js', ({ routes }) => {
+        for (let removeRoute of removeRoutes) removeRoute()
+        removeRoutes = []
+        for (let route of routes) {
+            removeRoutes.push(router.addRoute(route))
+        }
+        router.replace('')
+    })
+
+
+}
 
 app.use(router)
 
-app.mount('#app');
-
+app.mount('#app')

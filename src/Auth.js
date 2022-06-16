@@ -1,20 +1,19 @@
-import axios from 'vue-axios';
+import axios from 'axios';
 
 class Auth {
     constructor () {
         this.token = window.localStorage.getItem('token');
         let userData = window.localStorage.getItem('user');
+        
         this.user = userData ? JSON.parse(userData) : null;
 
         if (this.token) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.token;
         }
-        
-        console.log('this.user');
-
-        console.log(this.user);
 
     }
+
+    // set the local storage of the logged in user
     login (token, user) {
 
         window.localStorage.setItem('token', token);
@@ -32,6 +31,7 @@ class Auth {
         window.localStorage.removeItem('token');
         window.localStorage.removeItem('user');
         this.user = null;
+        this.token = null;
     }
 }
 export default new Auth();
