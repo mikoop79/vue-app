@@ -8,7 +8,7 @@
               <img
                   class="w-8 h-8"
                   src="/images/logo.png"
-                  alt="Workflow logo"
+                  alt="logo"
               />
             </div>
             <div class="hidden md:block">
@@ -59,21 +59,6 @@
 
               <!-- Profile dropdown -->
               <div class="relative ml-3">
-<!--                <div>-->
-<!--                  <button-->
-<!--                      class="flex items-center max-w-xs text-sm text-white rounded-full  focus:outline-none focus:shadow-solid"-->
-<!--                      id="user-menu"-->
-<!--                      aria-label="User menu"-->
-<!--                      aria-haspopup="true"-->
-<!--                      @click="showProfileMenu = !showProfileMenu"-->
-<!--                  >-->
-<!--                    <img-->
-<!--                        class="w-8 h-8 rounded-full"-->
-<!--                        src="/img/person1.jpeg"-->
-<!--                        alt=""-->
-<!--                    />-->
-<!--                  </button>-->
-<!--                </div>-->
               </div>
             </div>
           </div>
